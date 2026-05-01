@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: interview-analyzer
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+storage:
+  local:
+    path: ./uploads
+  s3:
+    bucket-name: ${S3_BUCKET_NAME:interview-videos}
+    region: ${S3_REGION:us-east-1}
+    access-key: ${AWS_ACCESS_KEY:placeholder}
+    secret-key: ${AWS_SECRET_KEY:placeholder}
+
+logging:
+  level:
+    com.judgeai.interviewanalyzer: DEBUG
+    org.springframework.web: INFO
