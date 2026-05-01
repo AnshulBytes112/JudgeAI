@@ -26,5 +26,13 @@ services:
     depends_on:
       - db
 
+  speech-analyzer:
+    build: ./speech_analyzer
+    container_name: speech-analyzer
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+
 volumes:
   postgres_data:
