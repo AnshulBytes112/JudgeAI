@@ -40,5 +40,11 @@ services:
     volumes:
       - ./uploads:/app/uploads
 
+  nlp-scorer:
+    build: ./nlp_scorer
+    container_name: nlp-scorer
+    ports:
+      - "8001:8001"
+
 volumes:
   postgres_data:
