@@ -6,8 +6,8 @@ services:
     container_name: interview-db
     environment:
       POSTGRES_DB: interview_db
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
     ports:
       - "5432:5432"
     volumes:
@@ -17,7 +17,7 @@ services:
     build: .
     container_name: interview-app
     ports:
-      - "8080:8080"
+      - "8082:8080"
     environment:
       SPRING_PROFILES_ACTIVE: local
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/interview_db
@@ -25,12 +25,18 @@ services:
       SPRING_DATASOURCE_PASSWORD: password
     depends_on:
       - db
+    volumes:
+      - ./uploads:/app/uploads
 
   speech-analyzer:
     build: ./speech_analyzer
     container_name: speech-analyzer
     ports:
       - "8000:8000"
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY:-placeholder}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_KEY:-placeholder}
+      AWS_DEFAULT_REGION: ${S3_REGION:-us-east-1}
     volumes:
       - ./uploads:/app/uploads
 

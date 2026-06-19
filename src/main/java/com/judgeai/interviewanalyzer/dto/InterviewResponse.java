@@ -14,4 +14,10 @@ public class InterviewResponse {
     private String url;
     private String status;
     private LocalDateTime createdAt;
+    private String transcript;
+    private Double wpm;
+    private Integer fillerWordsCount;
+    private Integer pausesCount;
+    private Double avgPauseDuration;
+    private Double durationSeconds;
 }

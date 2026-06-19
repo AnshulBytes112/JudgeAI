@@ -24,7 +24,7 @@ public class Interview {
     private String filename;
 
     @Column(nullable = false)
-    private String s3Url;
+    private String videoUrl;
 
     @Column(nullable = false)
     private String status;
@@ -32,4 +32,17 @@ public class Interview {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "TEXT")
+    private String transcript;
+
+    private Double wpm;
+
+    private Integer fillerWordsCount;
+
+    private Integer pausesCount;
+
+    private Double avgPauseDuration;
+
+    private Double durationSeconds;
 }

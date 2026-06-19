@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, HTTPException, Body, Depends
 from pydantic import BaseModel
 import os
 import uuid
@@ -12,13 +12,19 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Speech Analysis Microservice")
-analyzer = SpeechAnalyzer(model_name="base")
+_analyzer_instance = None
+
+def get_analyzer():
+    global _analyzer_instance
+    if _analyzer_instance is None:
+        _analyzer_instance = SpeechAnalyzer(model_name="base")
+    return _analyzer_instance
 
 class AnalysisRequest(BaseModel):
     path_or_url: str
 
 @app.post("/analyze-speech")
-async def analyze_speech(request: AnalysisRequest):
+async def analyze_speech(request: AnalysisRequest, analyzer: SpeechAnalyzer = Depends(get_analyzer)):
     input_path = request.path_or_url
     job_id = str(uuid.uuid4())
     temp_video = f"temp_{job_id}.video"
@@ -67,8 +73,15 @@ def download_from_s3(url: str, dest: str):
     logger.info(f"Downloading from S3: {url}")
     s3 = boto3.client('s3')
     parsed = urlparse(url)
-    bucket = parsed.netloc.split('.')[0]
-    key = parsed.path.lstrip('/')
+    
+    if parsed.scheme == 's3':
+        bucket = parsed.netloc
+        key = parsed.path.lstrip('/')
+    else:
+        # Assumes virtual-hosted style: bucket.s3.region.amazonaws.com
+        bucket = parsed.netloc.split('.')[0]
+        key = parsed.path.lstrip('/')
+        
     s3.download_file(bucket, key, dest)
 
 def throw_error(code: int, message: str):

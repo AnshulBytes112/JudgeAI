@@ -33,7 +33,7 @@ public class InterviewService {
 
         Interview interview = Interview.builder()
                 .filename(file.getOriginalFilename())
-                .s3Url(url)
+                .videoUrl(url)
                 .status("UPLOADED")
                 .build();
 
@@ -66,7 +66,7 @@ public class InterviewService {
         return InterviewResponse.builder()
                 .id(interview.getId())
                 .filename(interview.getFilename())
-                .url(interview.getS3Url())
+                .url(interview.getVideoUrl())
                 .status(interview.getStatus())
                 .createdAt(interview.getCreatedAt())
                 .build();

@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -10,7 +10,11 @@ WORKDIR /app
 
 # Copy requirements and install
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip "setuptools<70" wheel && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Pre-download the Whisper model to the image
+RUN python -c "import whisper; whisper.load_model('base')"
 
 # Copy the application
 COPY . .
