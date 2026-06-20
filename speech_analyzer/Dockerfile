@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir --upgrade pip "setuptools<70" wheel && \
     pip install --no-cache-dir -r requirements.txt
 
 # Pre-download the Whisper model to the image
-RUN python -c "import whisper; whisper.load_model('base')"
+RUN python -c "import whisper; whisper.load_model('base.en')"
 
 # Copy the application
 COPY . .

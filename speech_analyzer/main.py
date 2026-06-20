@@ -17,7 +17,7 @@ _analyzer_instance = None
 def get_analyzer():
     global _analyzer_instance
     if _analyzer_instance is None:
-        _analyzer_instance = SpeechAnalyzer(model_name="base")
+        _analyzer_instance = SpeechAnalyzer(model_name="base.en")
     return _analyzer_instance
 
 class AnalysisRequest(BaseModel):

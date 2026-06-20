@@ -20,4 +20,7 @@ public class InterviewResponse {
     private Integer pausesCount;
     private Double avgPauseDuration;
     private Double durationSeconds;
+    private Double overallScore;
+    private Double semanticSimilarity;
+    private Double keywordCoverage;
 }

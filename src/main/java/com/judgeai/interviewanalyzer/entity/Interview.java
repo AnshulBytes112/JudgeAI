@@ -23,7 +23,7 @@ public class Interview {
     @Column(nullable = false)
     private String filename;
 
-    @Column(nullable = false)
+    @Column
     private String videoUrl;
 
     @Column(nullable = false)
@@ -45,4 +45,10 @@ public class Interview {
     private Double avgPauseDuration;
 
     private Double durationSeconds;
+
+    private Double overallScore;
+
+    private Double semanticSimilarity;
+
+    private Double keywordCoverage;
 }

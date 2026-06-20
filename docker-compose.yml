@@ -1,18 +1,6 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:15
-    container_name: interview-db
-    environment:
-      POSTGRES_DB: interview_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
   app:
     build: .
     container_name: interview-app
@@ -20,11 +8,8 @@ services:
       - "8082:8080"
     environment:
       SPRING_PROFILES_ACTIVE: local
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/interview_db
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: password
-    depends_on:
-      - db
+      SPEECH_ANALYZER_URL: http://speech-analyzer:8000/analyze-speech
+      NLP_SCORER_URL: http://nlp-scorer:8001/analyze-content
     volumes:
       - ./uploads:/app/uploads
 
@@ -45,6 +30,3 @@ services:
     container_name: nlp-scorer
     ports:
       - "8001:8001"
-
-volumes:
-  postgres_data:

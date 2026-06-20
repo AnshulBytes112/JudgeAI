@@ -19,9 +19,13 @@ public class InterviewController {
     private final InterviewService interviewService;
 
     @PostMapping("/upload")
-    public ResponseEntity<InterviewResponse> uploadVideo(@RequestParam("video") MultipartFile file) {
+    public ResponseEntity<InterviewResponse> uploadVideo(
+            @RequestParam("video") MultipartFile file,
+            @RequestParam("question") String question,
+            @RequestParam("idealAnswer") String idealAnswer,
+            @RequestParam("keywords") java.util.List<String> keywords) {
         log.info("REST request to upload video: {}", file.getOriginalFilename());
-        InterviewResponse response = interviewService.uploadInterview(file);
+        InterviewResponse response = interviewService.uploadInterview(file, question, idealAnswer, keywords);
         return ResponseEntity.ok(response);
     }
 
