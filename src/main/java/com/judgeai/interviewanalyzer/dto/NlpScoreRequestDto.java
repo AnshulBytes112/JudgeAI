@@ -9,6 +9,9 @@ import java.util.List;
 public class NlpScoreRequestDto {
     private String transcript;
     private String question;
+    
+    @com.fasterxml.jackson.annotation.JsonProperty("ideal_answer")
     private String idealAnswer;
+    
     private List<String> keywords;
 }

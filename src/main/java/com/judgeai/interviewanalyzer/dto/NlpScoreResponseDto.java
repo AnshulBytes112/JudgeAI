@@ -6,18 +6,18 @@ import java.util.List;
 
 @Data
 public class NlpScoreResponseDto {
-    @JsonProperty("relevance_score")
+    @JsonProperty("overallScore")
     private Double relevanceScore;
     
-    @JsonProperty("cosine_similarity")
+    @JsonProperty("semanticSimilarity")
     private Double cosineSimilarity;
     
-    @JsonProperty("keyword_coverage")
+    @JsonProperty("keywordCoverage")
     private Double keywordCoverage;
     
-    @JsonProperty("matched_keywords")
+    @JsonProperty("matchedKeywords")
     private List<String> matchedKeywords;
     
-    @JsonProperty("missing_keywords")
+    @JsonProperty("missingKeywords")
     private List<String> missingKeywords;
 }
